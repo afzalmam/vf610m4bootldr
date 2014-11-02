@@ -8,12 +8,22 @@
 #define	SRC_BASE	0x4006e000
 #define SRC_GPR2	0x28
 #define SRC_GPR3	0x2c
-
+	.align
 main:
-	ldr	r0, =SRC_BASE
-	ldr	r0, =SRC_BASE
-	ldr	r1, =0xffffffff		@ Machine ID
+	ldr	r0, src_base
+	ldr	r1, machine_id		@ Machine ID
 	ldr	r2, [r0, #SRC_GPR3 ] 	@ DT pointer from argument register
-	b	entry
+	ldr	r0, =0x0
+	b	end
 
-entry:
+	.align
+
+	.globl machine_id
+machine_id:
+	.long	0xffffffff
+
+src_base:
+	.long	SRC_BASE
+
+	.align 4
+end:
